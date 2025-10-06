@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TukuFM & ZoomCaterers - Download Apps</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -11,8 +12,22 @@
       box-sizing: border-box;
     }
     
+    :root {
+      --primary: #4e54c8;
+      --primary-dark: #3c40a8;
+      --secondary: #ff6b6b;
+      --secondary-dark: #ff5252;
+      --light: #f8f9fa;
+      --dark: #333;
+      --gray: #666;
+      --white: #fff;
+      --shadow: 0 5px 15px rgba(0,0,0,0.05);
+      --shadow-hover: 0 10px 25px rgba(0,0,0,0.1);
+      --border-radius: 16px;
+    }
+    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: linear-gradient(135deg, #4e54c8, #8f94fb);
       margin: 0;
       padding: 0;
@@ -20,140 +35,327 @@
       min-height: 100vh;
       align-items: center;
       justify-content: center;
-      color: #333;
+      color: var(--dark);
+      line-height: 1.6;
     }
     
     .container {
-      background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+      background: var(--white);
+      padding: 30px 25px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       text-align: center;
       max-width: 800px;
       width: 90%;
+      margin: 20px;
+    }
+    
+    .header {
+      margin-bottom: 30px;
     }
     
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       margin-bottom: 10px;
-      color: #333;
+      color: var(--dark);
+      font-weight: 700;
     }
     
     .subtitle {
-      color: #666;
-      margin-bottom: 40px;
-      font-size: 18px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 400;
+    }
+    
+    .divider {
+      height: 3px;
+      width: 60px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      margin: 0 auto 20px;
+      border-radius: 10px;
     }
     
     .apps-container {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 30px;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 20px;
     }
     
     .app-card {
-      background: #f8f9fa;
-      border-radius: 15px;
-      padding: 30px;
-      width: 320px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      background: var(--light);
+      border-radius: var(--border-radius);
+      padding: 25px 20px;
+      box-shadow: var(--shadow);
       transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
     }
     
     .app-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .app-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .logo-container {
+      position: relative;
+      margin-bottom: 20px;
     }
     
     .logo {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 20px;
-      border-radius: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
       object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .app-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .zoom-badge {
+      background: var(--secondary);
     }
     
     .app-name {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #333;
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--dark);
+      font-weight: 600;
     }
     
     .app-description {
-      color: #666;
-      margin-bottom: 25px;
-      line-height: 1.5;
+      color: var(--gray);
+      margin-bottom: 20px;
+      font-size: 15px;
+      max-width: 300px;
     }
     
     .download-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      background-color: #4e54c8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background-color: var(--primary);
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 600;
       border: none;
       border-radius: 10px;
       text-decoration: none;
       transition: 0.3s;
       cursor: pointer;
+      width: 100%;
+      max-width: 220px;
     }
     
     .download-btn:hover {
-      background-color: #3c40a8;
-      transform: scale(1.05);
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
     }
     
     .zoom-btn {
-      background-color: #ff6b6b;
+      background-color: var(--secondary);
     }
     
     .zoom-btn:hover {
-      background-color: #ff5252;
+      background-color: var(--secondary-dark);
     }
     
-    @media (max-width: 768px) {
+    .btn-icon {
+      font-size: 18px;
+    }
+    
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+    
+    .feature i {
+      color: var(--primary);
+      font-size: 14px;
+    }
+    
+    .zoom-feature i {
+      color: var(--secondary);
+    }
+    
+    .footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      color: var(--gray);
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    /* Tablet and Desktop Styles */
+    @media (min-width: 768px) {
+      .container {
+        padding: 40px;
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      .subtitle {
+        font-size: 18px;
+      }
+      
       .apps-container {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        gap: 30px;
       }
       
       .app-card {
-        width: 100%;
-        max-width: 320px;
+        flex: 1;
+        padding: 30px;
+      }
+      
+      .logo {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .app-name {
+        font-size: 24px;
+      }
+      
+      .app-description {
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Download Our Apps</h1>
-    <p class="subtitle">Get the best experience with our mobile applications</p>
+    <div class="header">
+      <h1>Download Our Apps</h1>
+      <p class="subtitle">Get the best experience with our mobile applications</p>
+      <div class="divider"></div>
+    </div>
     
     <div class="apps-container">
       <!-- TukuFM App Card -->
       <div class="app-card">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjA_v7hng79HAiHCd4ZQdDIGqdoyHJ-D4khlL8pn1gRV45xzfH7eMydnlVNi48nkUv6wx2QWNlquijN22KquSdoi-8lhL2E7zH6ZgjHly3OWGs4AIlltUVbykfQuAoBYgorsl5a5K7HxfTdGkLkyYluGur9oQO9WYsCt9XIZVGA5_aZbS9dBtzD_YwCZg/s320/logotukufm.jpeg" alt="TukuFM Logo" class="logo">
-        <h2 class="app-name">TukuFM</h2>
-        <p class="app-description">Audiobooks & Dramas. Download now and enjoy unlimited entertainment.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.kalamsof.tukufm&hl=en" 
-           class="download-btn" target="_blank">
-           Download on Play Store
-        </a>
+        <div class="app-content">
+          <div class="logo-container">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjA_v7hng79HAiHCd4ZQdDIGqdoyHJ-D4khlL8pn1gRV45xzfH7eMydnlVNi48nkUv6wx2QWNlquijN22KquSdoi-8lhL2E7zH6ZgjHly3OWGs4AIlltUVbykfQuAoBYgorsl5a5K7HxfTdGkLkyYluGur9oQO9WYsCt9XIZVGA5_aZbS9dBtzD_YwCZg/s320/logotukufm.jpeg" alt="TukuFM Logo" class="logo">
+            <div class="app-badge">
+              <i class="fas fa-headphones"></i>
+            </div>
+          </div>
+          <h2 class="app-name">TukuFM</h2>
+          <p class="app-description">Audiobooks & Dramas. Download now and enjoy unlimited entertainment.</p>
+          
+          <div class="features">
+            <div class="feature">
+              <i class="fas fa-star"></i>
+              <span>4.5+ Rating</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-download"></i>
+              <span>10K+ Downloads</span>
+            </div>
+            <div class="feature">
+              <i class="fas fa-clock"></i>
+              <span>Latest Content</span>
+            </div>
+          </div>
+          
+          <a href="https://play.google.com/store/apps/details?id=com.kalamsof.tukufm&hl=en" 
+             class="download-btn" target="_blank">
+             <i class="fab fa-google-play btn-icon"></i>
+             Download on Play Store
+          </a>
+        </div>
       </div>
       
       <!-- ZoomCaterers App Card -->
       <div class="app-card">
-        <img src="https://play-lh.googleusercontent.com/QLzGGG0SXRByy2zvgCwhCyrtEEtu3oaxxzPPCnBbaGG7sDeCTuBkyPr4B-uOdDonyZY=w240-h480-rw" alt="ZoomCaterers Logo" class="logo">
-        <h2 class="app-name">ZoomCaterers</h2>
-        <p class="app-description">Find the best catering services for your events. Book with ease and convenience.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.gurr.zoomcaterers&hl=en_IN" 
-           class="download-btn zoom-btn" target="_blank">
-           Download on Play Store
-        </a>
+        <div class="app-content">
+          <div class="logo-container">
+            <img src="https://play-lh.googleusercontent.com/QLzGGG0SXRByy2zvgCwhCyrtEEtu3oaxxzPPCnBbaGG7sDeCTuBkyPr4B-uOdDonyZY=w240-h480-rw" alt="ZoomCaterers Logo" class="logo">
+            <div class="app-badge zoom-badge">
+              <i class="fas fa-utensils"></i>
+            </div>
+          </div>
+          <h2 class="app-name">ZoomCaterers</h2>
+          <p class="app-description">Find the best catering services for your events. Book with ease and convenience.</p>
+          
+          <div class="features">
+            <div class="feature zoom-feature">
+              <i class="fas fa-star"></i>
+              <span>4.8+ Rating</span>
+            </div>
+            <div class="feature zoom-feature">
+              <i class="fas fa-download"></i>
+              <span>5K+ Downloads</span>
+            </div>
+            <div class="feature zoom-feature">
+              <i class="fas fa-check-circle"></i>
+              <span>Verified Caterers</span>
+            </div>
+          </div>
+          
+          <a href="https://play.google.com/store/apps/details?id=com.gurr.zoomcaterers&hl=en_IN" 
+             class="download-btn zoom-btn" target="_blank">
+             <i class="fab fa-google-play btn-icon"></i>
+             Download on Play Store
+          </a>
+        </div>
       </div>
+    </div>
+    
+    <div class="footer">
+      <p>Need help? <a href="#">Contact Support</a> | <a href="#">Privacy Policy</a></p>
     </div>
   </div>
 </body>
